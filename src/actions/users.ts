@@ -12,6 +12,8 @@ export type AppUserRow = {
   role: AppRole | null;
   createdAt: string;
   lastSignInAt: string | null;
+  /** Invited but hasn't completed signup / set a password yet. */
+  isPending: boolean;
 };
 
 /**
@@ -37,6 +39,7 @@ export async function listUsers(): Promise<AppUserRow[]> {
       role: roleByUserId.get(u.id) ?? null,
       createdAt: u.created_at,
       lastSignInAt: u.last_sign_in_at ?? null,
+      isPending: !u.email_confirmed_at,
     }))
     .sort((a, b) => (a.email ?? "").localeCompare(b.email ?? ""));
 }

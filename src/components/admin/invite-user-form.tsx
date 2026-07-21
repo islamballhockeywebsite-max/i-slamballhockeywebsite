@@ -36,8 +36,8 @@ export function InviteUserForm() {
           </SelectContent>
         </Select>
       </div>
-      <Button type="submit" disabled={pending}>
-        {pending ? "Inviting…" : "Invite user"}
+      <Button type="submit" variant="create" disabled={pending}>
+        {pending ? "Inviting…" : "Create User"}
       </Button>
       {state.error && <p className="w-full text-sm text-destructive">{state.error}</p>}
       {state.success && <p className="w-full text-sm text-muted-foreground">Invite sent.</p>}

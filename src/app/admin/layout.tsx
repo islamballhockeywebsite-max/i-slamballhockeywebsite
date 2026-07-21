@@ -1,49 +1,37 @@
 import Link from "next/link";
+import { ArrowLeft, LogOut } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/session";
 import { signOut } from "@/actions/auth";
-
-const NAV = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/players", label: "Players" },
-  { href: "/admin/seasons", label: "Seasons & Divisions" },
-  { href: "/admin/teams", label: "Teams & Draft" },
-  { href: "/admin/rosters", label: "Rosters" },
-  { href: "/admin/schedule", label: "Schedule" },
-  { href: "/admin/playoffs", label: "Playoffs" },
-  { href: "/admin/announcements", label: "Announcements" },
-  { href: "/admin/sponsors", label: "Sponsors" },
-  { href: "/admin/historical-stats", label: "Historical Stats" },
-  { href: "/admin/users", label: "Users & Roles" },
-];
+import { AdminNav } from "@/components/admin/admin-nav";
+import { Button } from "@/components/ui/button";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user } = await requireAdmin();
+  await requireAdmin();
 
   return (
     <div className="flex min-h-screen">
-      <aside className="flex w-64 shrink-0 flex-col border-r bg-muted/30 p-4">
-        <div className="mb-6">
-          <p className="font-semibold">I-Slam Admin</p>
-          <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+      <aside className="flex w-56 shrink-0 flex-col border-r-2 border-foreground p-4">
+        <div className="mb-8">
+          <span className="font-heading text-lg">Admin</span>
         </div>
-        <nav className="flex-1 space-y-1">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="block rounded px-2 py-1.5 text-sm hover:bg-muted"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <form action={signOut}>
-          <button type="submit" className="text-sm text-muted-foreground hover:underline">
-            Sign out
-          </button>
-        </form>
+        <AdminNav />
+        <div className="mt-6 space-y-3">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" />
+            Back to Public Site
+          </Link>
+          <form action={signOut}>
+            <Button type="submit" variant="delete" size="sm" className="w-full gap-1.5">
+              <LogOut className="size-3.5" />
+              Log Out
+            </Button>
+          </form>
+        </div>
       </aside>
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 p-8">{children}</main>
     </div>
   );
 }

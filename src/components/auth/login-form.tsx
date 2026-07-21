@@ -12,20 +12,15 @@ export function LoginForm({ next }: { next: string }) {
   });
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form action={formAction} className="space-y-6">
       <input type="hidden" name="next" value={next} />
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Email*</Label>
         <Input id="email" name="email" type="email" autoComplete="email" required />
       </div>
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
-          <a href="/forgot-password" className="text-xs text-muted-foreground hover:underline">
-            Forgot password?
-          </a>
-        </div>
+        <Label htmlFor="password">Password*</Label>
         <Input
           id="password"
           name="password"
@@ -37,9 +32,15 @@ export function LoginForm({ next }: { next: string }) {
 
       {state.error && <p className="text-sm text-destructive">{state.error}</p>}
 
-      <Button type="submit" className="w-full" disabled={pending}>
+      <Button type="submit" size="lg" className="w-full rounded-full" disabled={pending}>
         {pending ? "Signing in…" : "Sign in"}
       </Button>
+
+      <p className="text-center text-sm">
+        <a href="/forgot-password" className="hover:underline">
+          Forgot your password?
+        </a>
+      </p>
     </form>
   );
 }

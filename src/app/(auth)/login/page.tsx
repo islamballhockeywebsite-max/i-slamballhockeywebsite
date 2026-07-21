@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginForm } from "@/components/auth/login-form";
 
 export default async function LoginPage({
@@ -12,16 +11,14 @@ export default async function LoginPage({
   const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/admin";
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>I-Slam Ball Hockey</CardTitle>
-          <p className="text-sm text-muted-foreground">Admin &amp; scorekeeper sign in</p>
-        </CardHeader>
-        <CardContent>
-          <LoginForm next={safeNext} />
-        </CardContent>
-      </Card>
+    <div className="min-h-screen bg-background">
+      <div className="p-8">
+        <span className="font-heading text-xl">I-Slam</span>
+      </div>
+      <div className="mx-auto max-w-sm px-4 pt-8">
+        <h1 className="mb-8 text-4xl">Log In</h1>
+        <LoginForm next={safeNext} />
+      </div>
     </div>
   );
 }
