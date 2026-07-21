@@ -76,6 +76,30 @@ export async function inviteUser(
   return { success: true };
 }
 
+/**
+ * True if `userId` is currently the only admin — used to block any action (role change,
+ * deactivation) that would leave the league with zero admins able to fix it, including
+ * via this very page. This is exactly the scenario that bit us once already: an admin
+ * deactivated their own account and had no way back in short of a direct DB fix.
+ */
+async function wouldRemoveLastAdmin(
+  service: ReturnType<typeof createServiceRoleClient>,
+  userId: string,
+): Promise<boolean> {
+  const { data: target } = await service
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (target?.role !== "admin") return false;
+
+  const { count } = await service
+    .from("user_roles")
+    .select("*", { count: "exact", head: true })
+    .eq("role", "admin");
+  return (count ?? 0) <= 1;
+}
+
 export type AssignRoleState = { error?: string };
 
 export async function assignRole(
@@ -91,6 +115,11 @@ export async function assignRole(
   }
 
   const service = createServiceRoleClient();
+
+  if (role !== "admin" && (await wouldRemoveLastAdmin(service, userId))) {
+    return { error: "Can't change the last remaining admin's role." };
+  }
+
   const { error } = await service.from("user_roles").upsert({ user_id: userId, role });
   if (error) return { error: error.message };
 
@@ -104,10 +133,17 @@ export async function assignRole(
  * cut off all admin/scorekeeper access at the RLS layer without touching auth.users or
  * any historical actor_id references (audit_log, announcements.author_id, etc.).
  */
-export async function deactivateUser(userId: string): Promise<void> {
+export async function deactivateUser(userId: string): Promise<{ error?: string }> {
   await requireAdmin();
   const service = createServiceRoleClient();
+
+  if (await wouldRemoveLastAdmin(service, userId)) {
+    return { error: "Can't deactivate the last remaining admin." };
+  }
+
   const { error } = await service.from("user_roles").delete().eq("user_id", userId);
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
+
   revalidatePath("/admin/users");
+  return {};
 }
