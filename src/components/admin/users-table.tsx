@@ -114,7 +114,12 @@ function UserRow({
 
         <div className="flex items-center gap-4">
           {!user.isPending && (
-            <Select value={role} onValueChange={handleRoleChange} disabled={pending || locked}>
+            <Select
+              value={role}
+              onValueChange={handleRoleChange}
+              disabled={pending || locked}
+              items={{ scorekeeper: "Scorekeeper", admin: "Admin" }}
+            >
               <SelectTrigger className="w-36">
                 <SelectValue />
               </SelectTrigger>

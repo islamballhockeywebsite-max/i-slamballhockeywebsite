@@ -72,7 +72,11 @@ export function SeasonForm({
 
       <div className="space-y-2">
         <Label htmlFor="status">Status</Label>
-        <Select name="status" defaultValue={season?.status ?? "upcoming"}>
+        <Select
+          name="status"
+          defaultValue={season?.status ?? "upcoming"}
+          items={{ upcoming: "Upcoming", active: "Active", completed: "Completed" }}
+        >
           <SelectTrigger id="status" className="w-48">
             <SelectValue />
           </SelectTrigger>

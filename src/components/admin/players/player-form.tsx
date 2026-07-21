@@ -75,7 +75,11 @@ export function PlayerForm({
         </div>
         <div className="space-y-2">
           <Label htmlFor="default_position">Position</Label>
-          <Select name="default_position" defaultValue={player?.default_position ?? undefined}>
+          <Select
+            name="default_position"
+            defaultValue={player?.default_position ?? undefined}
+            items={{ forward: "Forward", defense: "Defense", goalie: "Goalie" }}
+          >
             <SelectTrigger id="default_position" className="w-full">
               <SelectValue placeholder="Select position" />
             </SelectTrigger>
@@ -123,7 +127,11 @@ export function PlayerForm({
 
       <div className="space-y-2">
         <Label htmlFor="status">Status</Label>
-        <Select name="status" defaultValue={player?.status ?? "active"}>
+        <Select
+          name="status"
+          defaultValue={player?.status ?? "active"}
+          items={{ active: "Active", inactive: "Inactive" }}
+        >
           <SelectTrigger id="status" className="w-48">
             <SelectValue />
           </SelectTrigger>

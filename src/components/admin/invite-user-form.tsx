@@ -26,7 +26,11 @@ export function InviteUserForm() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="invite-role">Role</Label>
-        <Select name="role" defaultValue="scorekeeper">
+        <Select
+          name="role"
+          defaultValue="scorekeeper"
+          items={{ scorekeeper: "Scorekeeper", admin: "Admin" }}
+        >
           <SelectTrigger id="invite-role" className="w-40">
             <SelectValue />
           </SelectTrigger>

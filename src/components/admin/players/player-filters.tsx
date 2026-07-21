@@ -28,7 +28,11 @@ export function PlayerFilters({
           aria-label="Search players"
         />
       </div>
-      <Select name="status" defaultValue={status || "all"}>
+      <Select
+        name="status"
+        defaultValue={status || "all"}
+        items={{ all: "Any status", active: "Active", inactive: "Inactive" }}
+      >
         <SelectTrigger className="w-36">
           <SelectValue />
         </SelectTrigger>
@@ -38,7 +42,11 @@ export function PlayerFilters({
           <SelectItem value="inactive">Inactive</SelectItem>
         </SelectContent>
       </Select>
-      <Select name="position" defaultValue={position || "all"}>
+      <Select
+        name="position"
+        defaultValue={position || "all"}
+        items={{ all: "Any position", forward: "Forward", defense: "Defense", goalie: "Goalie" }}
+      >
         <SelectTrigger className="w-36">
           <SelectValue />
         </SelectTrigger>
