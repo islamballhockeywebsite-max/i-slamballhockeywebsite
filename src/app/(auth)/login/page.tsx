@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LoginForm } from "@/components/auth/login-form";
 
 export default async function LoginPage({
@@ -13,7 +14,7 @@ export default async function LoginPage({
   return (
     <div className="min-h-screen bg-background">
       <div className="p-8">
-        <span className="font-heading text-xl">I-Slam</span>
+        <Image src="/logo-black.png" alt="I-Slam Ball Hockey" width={176} height={80} priority />
       </div>
       <div className="mx-auto max-w-sm px-4 pt-8">
         <h1 className="mb-8 text-4xl">Log In</h1>
