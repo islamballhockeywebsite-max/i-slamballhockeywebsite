@@ -15,6 +15,7 @@ import {
   BarChart3,
   UserCog,
   ArrowRight,
+  Upload,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ const NAV = [
   { href: "/admin/announcements", label: "Announcement", icon: Megaphone },
   { href: "/admin/sponsors", label: "Sponsors", icon: Handshake },
   { href: "/admin/historical-stats", label: "Historical Stats", icon: BarChart3 },
+  { href: "/admin/import", label: "CSV Import", icon: Upload },
   { href: "/admin/users", label: "Users", icon: UserCog },
 ];
 

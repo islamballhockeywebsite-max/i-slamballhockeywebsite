@@ -38,7 +38,7 @@ export default async function PlayersPage({
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl">Manage Players</h1>
         <div className="flex gap-2">
-          <Button variant="csv" disabled title="CSV import lands in a later milestone">
+          <Button variant="csv" nativeButton={false} render={<Link href="/admin/import?type=players" />}>
             <Upload className="size-4" />
             CSV Import
           </Button>

@@ -663,6 +663,106 @@ export type Database = {
           },
         ]
       }
+      import_batches: {
+        Row: {
+          column_mapping: Json | null
+          committed_at: string | null
+          created_at: string
+          created_by: string | null
+          error_message: string | null
+          filename: string
+          id: string
+          status: Database["public"]["Enums"]["import_batch_status"]
+          total_rows: number
+          type: Database["public"]["Enums"]["import_type"]
+        }
+        Insert: {
+          column_mapping?: Json | null
+          committed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          filename: string
+          id?: string
+          status?: Database["public"]["Enums"]["import_batch_status"]
+          total_rows?: number
+          type: Database["public"]["Enums"]["import_type"]
+        }
+        Update: {
+          column_mapping?: Json | null
+          committed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          filename?: string
+          id?: string
+          status?: Database["public"]["Enums"]["import_batch_status"]
+          total_rows?: number
+          type?: Database["public"]["Enums"]["import_type"]
+        }
+        Relationships: []
+      }
+      import_rows: {
+        Row: {
+          batch_id: string
+          created_at: string
+          dedupe_match_player_id: string | null
+          id: string
+          mapped: Json | null
+          raw: Json
+          row_number: number
+          skip: boolean
+          status: Database["public"]["Enums"]["import_row_status"]
+          validation_errors: Json | null
+        }
+        Insert: {
+          batch_id: string
+          created_at?: string
+          dedupe_match_player_id?: string | null
+          id?: string
+          mapped?: Json | null
+          raw: Json
+          row_number: number
+          skip?: boolean
+          status?: Database["public"]["Enums"]["import_row_status"]
+          validation_errors?: Json | null
+        }
+        Update: {
+          batch_id?: string
+          created_at?: string
+          dedupe_match_player_id?: string | null
+          id?: string
+          mapped?: Json | null
+          raw?: Json
+          row_number?: number
+          skip?: boolean
+          status?: Database["public"]["Enums"]["import_row_status"]
+          validation_errors?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "import_rows_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "import_batches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "import_rows_dedupe_match_player_id_fkey"
+            columns: ["dedupe_match_player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "import_rows_dedupe_match_player_id_fkey"
+            columns: ["dedupe_match_player_id"]
+            isOneToOne: false
+            referencedRelation: "players_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       players: {
         Row: {
           created_at: string
@@ -1380,6 +1480,19 @@ export type Database = {
       game_status: "scheduled" | "in_progress" | "final" | "postponed"
       goal_strength: "even" | "powerplay" | "shorthanded"
       goalie_decision: "win" | "loss" | "tie" | "none"
+      import_batch_status:
+        | "uploaded"
+        | "mapped"
+        | "reviewed"
+        | "committed"
+        | "failed"
+      import_row_status:
+        | "pending"
+        | "valid"
+        | "invalid"
+        | "skipped"
+        | "committed"
+      import_type: "players" | "historical_skaters" | "historical_goalies"
       player_position: "forward" | "defense" | "goalie"
       player_status: "active" | "inactive"
       record_source: "manual" | "csv" | "import"
@@ -1530,6 +1643,21 @@ export const Constants = {
       game_status: ["scheduled", "in_progress", "final", "postponed"],
       goal_strength: ["even", "powerplay", "shorthanded"],
       goalie_decision: ["win", "loss", "tie", "none"],
+      import_batch_status: [
+        "uploaded",
+        "mapped",
+        "reviewed",
+        "committed",
+        "failed",
+      ],
+      import_row_status: [
+        "pending",
+        "valid",
+        "invalid",
+        "skipped",
+        "committed",
+      ],
+      import_type: ["players", "historical_skaters", "historical_goalies"],
       player_position: ["forward", "defense", "goalie"],
       player_status: ["active", "inactive"],
       record_source: ["manual", "csv", "import"],

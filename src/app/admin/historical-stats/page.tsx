@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { StatRow } from "@/components/admin/historical-stats/stat-row";
@@ -29,6 +29,14 @@ export default async function HistoricalStatsPage() {
     <div className="space-y-10">
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl">Historical Stats</h1>
+        <Button
+          variant="csv"
+          nativeButton={false}
+          render={<Link href="/admin/import?type=historical_skaters" />}
+        >
+          <Upload className="size-4" />
+          CSV Import
+        </Button>
       </div>
 
       <div className="space-y-3">
