@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { optionalNumberFromForm } from "@/lib/validation/shared";
 
 export const rosterRoles = ["player", "captain", "assistant"] as const;
 const positions = ["forward", "defense", "goalie"] as const;
@@ -8,10 +9,7 @@ const optionalPosition = z
   .optional()
   .transform((v) => (v ? v : null));
 
-const optionalJersey = z
-  .union([z.coerce.number().int().min(0).max(999), z.literal("")])
-  .optional()
-  .transform((v) => (v === "" || v === undefined ? null : v));
+const optionalJersey = optionalNumberFromForm(z.coerce.number().int().min(0).max(999));
 
 export const assignPlayerSchema = z.object({
   team_id: z.uuid(),
