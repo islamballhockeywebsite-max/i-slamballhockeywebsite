@@ -1,5 +1,6 @@
 import { requireScorekeeper } from "@/lib/auth/session";
 import { signOut } from "@/actions/auth";
+import { Providers } from "@/components/scorekeeper/providers";
 
 export default async function ScorekeeperLayout({ children }: { children: React.ReactNode }) {
   const { user } = await requireScorekeeper();
@@ -17,7 +18,9 @@ export default async function ScorekeeperLayout({ children }: { children: React.
           </button>
         </form>
       </header>
-      <main className="p-6">{children}</main>
+      <main className="p-6">
+        <Providers>{children}</Providers>
+      </main>
     </div>
   );
 }
